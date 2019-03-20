@@ -1,38 +1,11 @@
 // @flow
 
-import './store'
-import { getState, dispatch, actionTypes } from './store'
+import { initStore, getState, dispatch, actionTypes } from './store'
 import * as dom from './dom'
+import { injectStyle } from './injectStyle'
 import type { AppState } from './interface'
 
 function notify(text) {
-  const style = document.createElement('style')
-
-  const styled = {
-    div: (literals: string[]) => literals[0],
-  }
-
-  const css = styled.div`
-    .notification {
-      position: fixed;
-      bottom: 64px;
-      left: 40%;
-      z-index: 1000;
-      width: 300px;
-      padding: 12px;
-      background: #333;
-      color: #fff;
-      border-radius: 3px;
-      opacity: 0.88;
-    }
-  `
-
-  style.type = 'text/css'
-  style.setAttribute('id', 'google-map-scraping-clipboard')
-  style.appendChild(document.createTextNode(css))
-
-  dom.getHead().appendChild(style)
-
   const div = document.createElement('div')
   div.innerText = text
   div.classList.add('notification')
@@ -76,21 +49,29 @@ function formatRow(title: ?string, location: ?string) {
 }
 
 /* @export */
-function toggle() {
+function toggle(): boolean {
   const { enabled } = getState()
   if (enabled) {
     dispatch(actionTypes.SET_ENABLED)
+    notify('Text Copy is Disabled...')
   } else {
     dispatch(actionTypes.SET_DISABLED)
+    notify('Text Copy is Enabled!')
   }
+  return getState().enabled
 }
 
 window.toggle = toggle
 
 function main() {
-  const content = getContent()
-  copy(content)
-  notify('Content Copied!')
+  const text = getContent()
+  if (getState().copiedText !== text) {
+    dispatch(actionTypes.SET_COPIED_TEXT, { copiedText: text })
+    copy(text)
+    notify('Text Copied!')
+  }
 }
 
-setInterval(main, 3000)
+initStore()
+injectStyle()
+setInterval(main, 2000)

@@ -19,7 +19,7 @@ export function getHead() {
 export function getElementByIdOrFail(id: string) {
   const el = document.getElementById(id)
   if (!el) {
-    throw new Error('no head found')
+    throw new Error('no element found')
   }
   return el
 }

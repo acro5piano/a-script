@@ -6,9 +6,26 @@
   "author": "gosho-kazuya <ketsume0211@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "zip google-map-scraping-clipboard.zip manifest.json main.js"
+    "watch": "npm-run-all clean --parallel watch:static watch:js",
+    "watch:js": "webpack --watch --mode development src/app.js",
+    "watch:static": "nodemon",
+    "build": "npm run copy && webpack --output dist/bundle.js src/app.js",
+    "clean": "rm -rf dist/*",
+    "copy": "cp -v manifest.json src/assets/* src/popup/* dist",
+    "zip": "zip google-map-scraping-clipboard.zip manifest.json dist"
   },
   "devDependencies": {
-    "prettier": "^1.16.4"
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.1",
+    "@babel/preset-flow": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "flow": "^0.2.3",
+    "flow-bin": "^0.95.1",
+    "nodemon": "^1.18.10",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.16.4",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
   }
 }

@@ -1,8 +1,15 @@
+// @flow
+
+import './store'
+import { getState, dispatch, actionTypes } from './store'
+import * as dom from './dom'
+import type { AppState } from './interface'
+
 function notify(text) {
   const style = document.createElement('style')
 
   const styled = {
-    div: (...literals) => literals[0],
+    div: (literals: string[]) => literals[0],
   }
 
   const css = styled.div`
@@ -24,23 +31,15 @@ function notify(text) {
   style.setAttribute('id', 'google-map-scraping-clipboard')
   style.appendChild(document.createTextNode(css))
 
-  getHead().appendChild(style)
+  dom.getHead().appendChild(style)
 
   const div = document.createElement('div')
   div.innerText = text
   div.classList.add('notification')
 
-  getBody().appendChild(div)
+  dom.getBody().appendChild(div)
 
   setTimeout(() => div.remove(), 2000)
-}
-
-function getBody() {
-  return document.documentElement || document.body || document.querySelector('body')
-}
-
-function getHead() {
-  return document.documentElement || document.head || document.querySelector('head')
 }
 
 function copy(value) {
@@ -48,7 +47,7 @@ function copy(value) {
 
   textarea.innerHTML = value
   textarea.setAttribute('id', 'content')
-  getBody().appendChild(textarea)
+  dom.getBody().appendChild(textarea)
 
   textarea.select()
   document.execCommand('copy')
@@ -69,34 +68,29 @@ function getContent() {
     .join('\n')
 }
 
-function formatRow(title, location) {
+function formatRow(title: ?string, location: ?string) {
+  if (!title || !location) {
+    throw new Error('invalid values')
+  }
   return `${title}\t\t\t${location}`
 }
+
+/* @export */
+function toggle() {
+  const { enabled } = getState()
+  if (enabled) {
+    dispatch(actionTypes.SET_ENABLED)
+  } else {
+    dispatch(actionTypes.SET_DISABLED)
+  }
+}
+
+window.toggle = toggle
 
 function main() {
   const content = getContent()
   copy(content)
   notify('Content Copied!')
-}
-
-function getOnObject() {
-  const on = document.getElementById('on')
-  if (on) {
-    return on
-  }
-  const el = document.createElement('input')
-  el.setAttribute('id', 'on')
-  el.value = 'true'
-  getBody().appendChild(el)
-  return el
-}
-
-function isOn() {
-  return getOnObject().value === 'true'
-}
-
-function toggle() {
-  getOnObject().value = getOnObject().value === 'true' ? 'false' : 'true'
 }
 
 setInterval(main, 3000)

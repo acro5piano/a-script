@@ -1,4 +1,3 @@
-// TODO: only once
 function copy(value) {
   const textarea = document.createElement('textarea')
 
@@ -11,6 +10,8 @@ function copy(value) {
   textarea.select()
 
   document.execCommand('copy')
+
+  textarea.remove()
 }
 
 function getContent() {
@@ -33,7 +34,14 @@ function formatRow(title, location) {
 
 function main() {
   const content = getContent()
+  console.log(content)
   copy(content)
 }
 
 main()
+
+// chrome.tabs.getSelected(null, tab => {
+//   console.log('selected')
+// })
+
+// setInterval(main, 2000)

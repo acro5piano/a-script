@@ -5,11 +5,18 @@
   "description": "a script. do not use this.",
   "version": "0.0.1",
   "homepage_url": "https://github.com/acro5piano/a-script",
-  "content_scripts": [
-    {
-      "matches": ["https://www.google.com/maps/search/*"],
-      "js": ["main.js"]
-    }
+  "browser_action": {
+    "default_icon": "icon-off.png",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "tabs",
+    "https://www.google.com/maps/search/*",
+    "clipboardRead",
+    "clipboardWrite"
   ],
-  "permissions": ["tabs", "https://www.google.com/maps/search/*"]
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  }
 }

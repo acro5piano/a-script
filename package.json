@@ -5,6 +5,9 @@
   "repository": "git@github.com:acro5piano/a-script",
   "author": "gosho-kazuya <ketsume0211@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "build": "zip google-map-scraping-clipboard.zip manifest.json main.js"
+  },
   "devDependencies": {
     "prettier": "^1.16.4"
   }

@@ -1,0 +1,15 @@
+{
+  "manifest_version": 2,
+  "author": "kazuya gosho",
+  "name": "google-map-scraping-clipboard",
+  "description": "a script. do not use this.",
+  "version": "0.0.1",
+  "homepage_url": "https://github.com/acro5piano/a-script",
+  "content_scripts": [
+    {
+      "matches": ["https://www.google.com/maps/search/*"],
+      "js": ["main.js"]
+    }
+  ],
+  "permissions": ["tabs", "https://www.google.com/maps/search/*"]
+}

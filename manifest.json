@@ -14,9 +14,5 @@
     "https://www.google.com/maps/search/*",
     "clipboardRead",
     "clipboardWrite"
-  ],
-  "background": {
-    "scripts": ["background.js"],
-    "persistent": false
-  }
+  ]
 }

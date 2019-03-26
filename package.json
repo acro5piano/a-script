@@ -12,7 +12,7 @@
     "build": "npm run copy && webpack --mode production src/app.js",
     "clean": "rm -rf dist/*",
     "copy": "cp -v manifest.json src/assets/* src/popup/* dist",
-    "zip": "zip google-map-scraping-clipboard.zip dist/*"
+    "zip": "rm google-map-scraping-clipboard.zip && zip google-map-scraping-clipboard.zip dist/*"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",

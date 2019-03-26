@@ -11,7 +11,8 @@
   },
   "permissions": [
     "tabs",
-    "https://www.google.com/maps/search/*",
+    "https://www.google.com/maps/*",
+    "https://www.google.co.jp/maps/*",
     "clipboardRead",
     "clipboardWrite"
   ]
